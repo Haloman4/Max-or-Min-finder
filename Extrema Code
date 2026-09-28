@@ -1,0 +1,47 @@
+import sympy as sp
+import numpy as np
+import matplotlib.pyplot as plt
+
+
+x = sp.Symbol('x')
+# Define Parameters
+
+f = x
+
+#Find derivative and extrema
+def max_or_min(f):
+  display("Function:", f)
+  derivative = sp.diff(f, x)
+  display("Derivative:", derivative)
+  extrema = sp.solve(derivative)
+  if not extrema:
+    print('No extrema')
+  else: 
+    print(f"Maxima and Minima:{extrema}")
+  return(derivative)
+#max_or_min(f)
+derivative = max_or_min(f)
+
+#Plot function and Derivative
+def get_values(function):
+  diff = sp.lambdify(x, function)
+  x_values = np.linspace(-10, 10, 10)
+  y_values = np.asarray(diff(x_values)) * np.ones_like(x_values)
+  # Plot main function
+  plt.plot(x_values, y_values, 'o--', color = 'red')
+  plt.ylabel('y')
+  plt.xlabel('x')
+  plt.show()
+  # Plot Derivative
+  f_diff = sp.diff(function, x)
+  np_f = sp.lambdify(x, f_diff)
+  dx_values = np.linspace(-10, 10, 10)
+  dy_values = np.asarray(np_f(dx_values)) * np.ones_like(dx_values)
+  plt.plot(dx_values, dy_values, '--', color = 'blue')
+  plt.ylabel('dy/dx') 
+  plt.xlabel('x')
+  plt.show()
+
+
+
+get_values(f)
